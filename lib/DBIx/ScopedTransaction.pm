@@ -15,11 +15,11 @@ DBIx::ScopedTransaction - Scope database transactions on DBI handles in code, to
 
 =head1 VERSION
 
-Version 1.0.2
+Version 1.0.3
 
 =cut
 
-our $VERSION = '1.0.2';
+our $VERSION = '1.0.3';
 
 our $DESTROY_LOGGER;
 
@@ -31,11 +31,11 @@ our $DESTROY_LOGGER;
 	
 	# Optional, define custom logger for errors detected when destroying a
 	# transaction object. By default, this prints to STDERR.
-	local $DBIx::ScopedTransaction::DESTROY_LOGGER = sub
+	$DBIx::ScopedTransaction::DESTROY_LOGGER = sub
 	{
 		my ( $messages ) = @_;
 		
-		foreach $message ( @$messages )
+		foreach my $message ( @$messages )
 		{
 			warn "DBIx::ScopedTransaction: $message";
 		}
@@ -185,13 +185,17 @@ sub commit
 		return 0;
 	}
 	
-	if ( $self->get_database_handle()->commit() )
+	my $database_handle = $self->get_database_handle();
+	if ( $database_handle->commit() )
 	{
 		$self->is_active( 0 );
 		return 1;
 	}
-	
-	return 0;
+	else
+	{
+		Carp::cluck( 'Failed to commit transaction: ' . $database_handle->errstr() );
+		return 0;
+	}
 }
 
 
@@ -213,13 +217,17 @@ sub rollback
 		return 0;
 	}
 	
-	if ( $self->get_database_handle()->rollback() )
+	my $database_handle = $self->get_database_handle();
+	if ( $database_handle->rollback() )
 	{
 		$self->is_active( 0 );
 		return 1;
 	}
-	
-	return 0;
+	else
+	{
+		Carp::cluck( 'Failed to rollback transaction: ' . $database_handle->errstr() );
+		return 0;
+	}
 }
 
 
@@ -230,10 +238,10 @@ object is destroyed.
 
 	_default_destroy_logger( $messages );
 
-To override this default logger you can localize
+To override this default logger you can override
 C<$DBIx::ScopedTransaction::DESTROY_LOGGER>. For example:
 
-	local $DBIx::ScopedTransaction::DESTROY_LOGGER = sub
+	$DBIx::ScopedTransaction::DESTROY_LOGGER = sub
 	{
 		my ( $messages ) = @_;
 		
