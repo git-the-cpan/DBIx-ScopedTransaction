@@ -19,7 +19,7 @@ Version 1.0.3
 
 =cut
 
-our $VERSION = '1.0.3';
+our $VERSION = '1.0.4';
 
 our $DESTROY_LOGGER;
 
@@ -109,6 +109,16 @@ sub new
 {
 	my ( $class, $database_handle ) = @_;
 	
+	# If we're in void context, DESTROY will be called immediately on the
+	# object we return in new(), which is not desirable and indicates an
+	# error in the calling code. To prevent unhelpful reports of
+	# "transaction not completed properly", we instead catch it here before
+	# we even instantiate the object.
+	Carp::croak(
+		'You need to assign the output of DBIx::ScopedTransaction to a ' .
+		'variable, otherwise it would get destroyed immediately.'
+	) if !defined( wantarray() );
+	
 	Carp::croak('You need to pass a database handle to create a new transaction object')
 		if !Data::Validate::Type::is_instance( $database_handle, class => 'DBI::db' );
 	
@@ -193,7 +203,10 @@ sub commit
 	}
 	else
 	{
-		Carp::cluck( 'Failed to commit transaction: ' . $database_handle->errstr() );
+		Carp::cluck(
+			'Failed to commit transaction: ' .
+			( $database_handle->errstr() // '(no error associate with the database handle)' )
+		);
 		return 0;
 	}
 }
@@ -225,7 +238,10 @@ sub rollback
 	}
 	else
 	{
-		Carp::cluck( 'Failed to rollback transaction: ' . $database_handle->errstr() );
+		Carp::cluck(
+			'Failed to rollback transaction: ' .
+			( $database_handle->errstr() // '(no error associate with the database handle)' )
+		);
 		return 0;
 	}
 }
