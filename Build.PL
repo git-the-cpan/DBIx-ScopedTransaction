@@ -10,19 +10,19 @@ my $builder = Module::Build->new(
 	dist_version_from    => 'lib/DBIx/ScopedTransaction.pm',
 	build_requires       =>
 	{
-		'Carp'                 => 0,
 		'Data::Dumper'         => 0,
-		'Data::Validate::Type' => 0,
 		'DBD::SQLite'          => 0,
 		'DBI'                  => 0,
 		'File::Spec'           => 0,
 		'Test::Exception'      => 0,
 		'Test::More'           => 0,
-		'Try::Tiny'            => 0,
 	},
 	requires             =>
 	{
 		'perl'                 => 5.006,
+		'Carp'                 => 0,
+		'Data::Validate::Type' => 0,
+		'Try::Tiny'            => 0,
 	},
 	add_to_cleanup       =>
 	[
@@ -38,7 +38,7 @@ my $builder = Module::Build->new(
 	{
 		resources              =>
 		{
-			repository  => 'https://sourceforge.net/p/perltransaction/code',
+			repository  => 'https://github.com/guillaumeaubert/DBIx-ScopedTransaction',
 			homepage    => 'https://metacpan.org/release/DBIx-ScopedTransaction',
 			bugtracker  => 'http://rt.cpan.org/NoAuth/ReportBug.html?Queue=dbix-scopedtransaction',
 		},
