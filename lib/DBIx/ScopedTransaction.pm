@@ -15,11 +15,11 @@ DBIx::ScopedTransaction - Scope database transactions on DBI handles in code, to
 
 =head1 VERSION
 
-Version 1.0.7
+Version 1.1.0
 
 =cut
 
-our $VERSION = '1.0.7';
+our $VERSION = '1.1.0';
 
 our $DESTROY_LOGGER;
 
@@ -81,7 +81,7 @@ programmer handled terminating the transaction.
 		catch
 		{
 			$transaction->rollback();
-		}
+		};
 	}
 	
 	test();
@@ -93,11 +93,11 @@ and forces a rollback for safety as well as prints details on what code should
 be reviewed on STDERR.
 
 
-=head1 FUNCTIONS
+=head1 METHODS
 
 =head2 new()
 
-Creates a new transaction.
+Create a new transaction.
 
 	my $transaction = DBIx::ScopedTransaction->new(
 		$database_handle,
@@ -141,9 +141,9 @@ sub new
 
 =head2 get_database_handle()
 
-Returns the database handle the current transaction is operating on.
+Return the database handle the current transaction is operating on.
 
-	my $database_handle = get_database_handle();
+	my $database_handle = $transaction->get_database_handle();
 
 =cut
 
@@ -157,10 +157,15 @@ sub get_database_handle
 
 =head2 is_active()
 
-Returns whether the current transaction object is active.
+Return whether the current transaction object is active.
 
-	my $boolean = $self->is_active();
-	my $boolean = $self->is_active( $boolean );
+	# Get the active status of the transaction.
+	my $is_active = $transaction->is_active();
+
+	# Set the active status of the transaction.
+	$transaction->is_active( $is_active );
+
+The transaction object goes inactive after a successful commit or rollback.
 
 =cut
 
@@ -179,9 +184,9 @@ sub is_active
 
 =head2 commit()
 
-Commits the current transaction.
+Commit the current transaction.
 
-	my $boolean = $self->commit();
+	my $commit_successful = $transaction->commit();
 
 =cut
 
@@ -214,9 +219,9 @@ sub commit
 
 =head2 rollback()
 
-Rolls back the current transaction.
+Roll back the current transaction.
 
-	my $boolean = $self->rollback();
+	my $rollback_successful = $transaction->rollback();
 
 =cut
 
@@ -246,6 +251,8 @@ sub rollback
 	}
 }
 
+
+=head1 HIDDEN FUNCTIONS
 
 =head2 _default_destroy_logger()
 
@@ -423,10 +430,16 @@ for them!
 
 Copyright 2012 Guillaume Aubert.
 
-This program is free software; you can redistribute it and/or modify it
-under the terms of the Artistic License.
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License version 3 as published by the Free
+Software Foundation.
 
-See http://dev.perl.org/licenses/ for more information.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see http://www.gnu.org/licenses/
 
 =cut
 
