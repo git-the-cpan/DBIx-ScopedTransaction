@@ -9,18 +9,11 @@ use File::Spec;
 use Test::Exception;
 use Test::More tests => 5;
 
+use lib 't/lib';
+use LocalTest;
 
-ok(
-	my $dbh = DBI->connect(
-		"dbi:SQLite::memory:",
-		'',
-		'',
-		{
-			RaiseError => 1,
-		}
-	),
-	'Create connection to a SQLite database.',
-);
+
+my $dbh = LocalTest::ok_database_handle();
 
 my $transaction;
 lives_ok(
@@ -45,7 +38,7 @@ throws_ok(
 	{
 		my $transaction2 = DBIx::ScopedTransaction->new( $dbh );
 	},
-	qr/DBD::SQLite::db begin_work failed: Already in a transaction/,
+	qr/DBD::([^:]+)::db begin_work failed: Already in a transaction/,
 	'Fail to start two simultaneous transactions on the same database handle.',
 );
 

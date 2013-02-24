@@ -8,18 +8,11 @@ use DBIx::ScopedTransaction;
 use Test::Exception;
 use Test::More tests => 11;
 
+use lib 't/lib';
+use LocalTest;
 
-ok(
-	my $dbh = DBI->connect(
-		"dbi:SQLite::memory:",
-		'',
-		'',
-		{
-			RaiseError => 1,
-		}
-	),
-	'Create connection to a SQLite database.',
-);
+
+my $dbh = LocalTest::ok_database_handle();
 
 lives_ok
 (
@@ -61,10 +54,14 @@ ok(
 		sub
 		{
 			$dbh->do(
-				q|
-					INSERT INTO test_out_of_scope('name')
-					VALUES('test1');
-				|
+				sprintf(
+					q|
+						INSERT INTO test_out_of_scope( %s )
+						VALUES( %s );
+					|,
+					$dbh->quote_identifier( 'name' ),
+					$dbh->quote( 'test1' ),
+				)
 			);
 		},
 		'Insert row.'
@@ -79,7 +76,7 @@ isnt(
 ) || diag( explain( $destroy_logs ) );
 
 is(
-	scalar ( grep { $_ eq 'Transaction object created at t/40-DESTROY.t:54 is going out of scope, but the transaction has not been committed or rolled back; check logic.' } @$destroy_logs ),
+	scalar ( grep { $_ eq 'Transaction object created at t/40-DESTROY.t:47 is going out of scope, but the transaction has not been committed or rolled back; check logic.' } @$destroy_logs ),
 	1,
 	'Found warning explaining where the transaction was started and that is was not completed properly.',
 ) || diag( explain( $destroy_logs ) );

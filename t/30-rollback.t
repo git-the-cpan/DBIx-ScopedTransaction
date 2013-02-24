@@ -9,18 +9,11 @@ use File::Spec;
 use Test::Exception;
 use Test::More tests => 6;
 
+use lib 't/lib';
+use LocalTest;
 
-ok(
-	my $dbh = DBI->connect(
-		"dbi:SQLite::memory:",
-		'',
-		'',
-		{
-			RaiseError => 1,
-		}
-	),
-	'Create connection to a SQLite database',
-);
+
+my $dbh = LocalTest::ok_database_handle();
 
 lives_ok
 (
@@ -44,10 +37,14 @@ lives_ok
 	sub
 	{
 		$dbh->do(
-			q|
-				INSERT INTO test_rollback('name')
-				VALUES('test1');
-			|
+			sprintf(
+				q|
+					INSERT INTO test_rollback( %s )
+					VALUES( %s );
+				|,
+				$dbh->quote_identifier( 'name' ),
+				$dbh->quote( 'test1' ),
+			)
 		);
 	},
 	'Insert row.'
