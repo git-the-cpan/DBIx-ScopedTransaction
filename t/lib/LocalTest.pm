@@ -14,11 +14,11 @@ LocalTest - Test functions for L<DBIx::ScopedTransaction>.
 
 =head1 VERSION
 
-Version 1.1.1
+Version 1.1.2
 
 =cut
 
-our $VERSION = '1.1.1';
+our $VERSION = '1.1.2';
 
 
 =head1 SYNOPSIS
@@ -89,9 +89,10 @@ Guillaume Aubert, C<< <aubertg at cpan.org> >>.
 
 =head1 BUGS
 
-Please report any bugs or feature requests to C<bug-dbix-scopedtransaction at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=DBIx-ScopedTransaction>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
+Please report any bugs or feature requests through the web interface at
+L<https://github.com/guillaumeaubert/DBIx-ScopedTransaction/issues/new>.
+I will be notified, and then you'll automatically be notified of progress on
+your bug as I make changes.
 
 
 =head1 SUPPORT
@@ -105,9 +106,9 @@ You can also look for information at:
 
 =over 4
 
-=item * RT: CPAN's request tracker
+=item * GitHub's request tracker
 
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=DBIx-ScopedTransaction>
+L<https://github.com/guillaumeaubert/DBIx-ScopedTransaction/issues>
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
@@ -117,16 +118,16 @@ L<http://annocpan.org/dist/DBIx-ScopedTransaction>
 
 L<http://cpanratings.perl.org/d/DBIx-ScopedTransaction>
 
-=item * Search CPAN
+=item * MetaCPAN
 
-L<http://search.cpan.org/dist/DBIx-ScopedTransaction>
+L<https://metacpan.org/release/DBIx-ScopedTransaction>
 
 =back
 
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2009-2013 Guillaume Aubert.
+Copyright 2012-2013 Guillaume Aubert.
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License version 3 as published by the Free

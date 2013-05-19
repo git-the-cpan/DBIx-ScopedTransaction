@@ -8,6 +8,7 @@ build_requires:
   Data::Dumper: 0
   File::Spec: 0
   Test::Exception: 0
+  Test::FailWarnings: 0
   Test::More: 0
 configure_requires:
   Module::Build: 0
@@ -24,15 +25,15 @@ no_index:
 provides:
   DBIx::ScopedTransaction:
     file: lib/DBIx/ScopedTransaction.pm
-    version: v1.1.1
+    version: v1.1.2
 requires:
   Carp: 0
   Data::Validate::Type: 0
   Try::Tiny: 0
   perl: 5.006
 resources:
-  bugtracker: http://rt.cpan.org/NoAuth/ReportBug.html?Queue=dbix-scopedtransaction
+  bugtracker: https://github.com/guillaumeaubert/DBIx-ScopedTransaction/issues
   homepage: https://metacpan.org/release/DBIx-ScopedTransaction
   license: http://www.gnu.org/licenses/gpl-3.0.txt
   repository: https://github.com/guillaumeaubert/DBIx-ScopedTransaction
-version: v1.1.1
+version: v1.1.2

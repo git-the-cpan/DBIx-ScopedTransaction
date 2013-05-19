@@ -26,6 +26,7 @@
             "Data::Dumper" : "0",
             "File::Spec" : "0",
             "Test::Exception" : "0",
+            "Test::FailWarnings" : "0",
             "Test::More" : "0"
          }
       },
@@ -46,13 +47,13 @@
    "provides" : {
       "DBIx::ScopedTransaction" : {
          "file" : "lib/DBIx/ScopedTransaction.pm",
-         "version" : "v1.1.1"
+         "version" : "v1.1.2"
       }
    },
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
-         "web" : "http://rt.cpan.org/NoAuth/ReportBug.html?Queue=dbix-scopedtransaction"
+         "web" : "https://github.com/guillaumeaubert/DBIx-ScopedTransaction/issues"
       },
       "homepage" : "https://metacpan.org/release/DBIx-ScopedTransaction",
       "license" : [
@@ -62,5 +63,5 @@
          "url" : "https://github.com/guillaumeaubert/DBIx-ScopedTransaction"
       }
    },
-   "version" : "v1.1.1"
+   "version" : "v1.1.2"
 }
