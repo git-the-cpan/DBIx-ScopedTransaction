@@ -27,7 +27,8 @@
             "File::Spec" : "0",
             "Test::Exception" : "0",
             "Test::FailWarnings" : "0",
-            "Test::More" : "0"
+            "Test::More" : "0",
+            "Test::Warn" : "0"
          }
       },
       "configure" : {
@@ -47,7 +48,7 @@
    "provides" : {
       "DBIx::ScopedTransaction" : {
          "file" : "lib/DBIx/ScopedTransaction.pm",
-         "version" : "v1.1.3"
+         "version" : "v1.1.4"
       }
    },
    "release_status" : "stable",
@@ -63,5 +64,5 @@
          "url" : "https://github.com/guillaumeaubert/DBIx-ScopedTransaction"
       }
    },
-   "version" : "v1.1.3"
+   "version" : "v1.1.4"
 }
